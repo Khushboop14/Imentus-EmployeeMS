@@ -1,0 +1,30 @@
+.login {
+    background: url('Images/employeems.jpeg');
+    background: linear-gradient(rgba(50, 20, 158, 0.5), rgba(10, 10, 10, 0.5)), url('Images/employeems.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 120%;
+
+    background-size: cover;  /* Ensures it covers the full container */
+    height: 100vh; /* Full viewport height */
+
+}
+
+.loginForm {
+    background-color:rgb(11, 29, 63);
+    color: white;
+    padding: 20px; /* You can add padding for better spacing */
+    border-radius: 8px;
+    opacity: 1;
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Take up the remaining space */
+  }
+  
+  #menu li:last-child {
+    margin-top: 10px; /* Push the Logout button to the bottom */
+    font-size: large;
+  }
