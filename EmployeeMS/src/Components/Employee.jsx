@@ -54,7 +54,6 @@ function Employee() {
               <th>Salary</th>
               <th>e-mail</th>
               <th>Action</th>
-
             </tr>
           </thead>
           <tbody>

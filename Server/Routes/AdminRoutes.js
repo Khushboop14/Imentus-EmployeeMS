@@ -35,6 +35,21 @@ router.post('/adminlogin', (req, res) => {
 });
 
 
+//Route to show list of department
+router.get('/department', (req, res) => {
+    const sql = "SELECT * FROM department"; // Your query to fetch departments
+
+    con.query(sql, (err, result) => {
+        if (err) {
+            console.error("Database Query Error:", err); // Debug database errors
+            return res.status(500).json({ Status: false, Error: "Database Query Error" });
+        } else {
+            // Ensure that the result is in the expected format
+            return res.json({ Status: true, Result: result.rows }); // Use result.rows to return the array of rows
+        }
+    });
+});
+
 // Route for adding a Department
 router.post('/add_department', (req, res) => {
     const sql = "INSERT INTO department (department) VALUES ($1) RETURNING *";
@@ -47,7 +62,6 @@ router.post('/add_department', (req, res) => {
             console.error("Database Query Error:", err); // Debug database errors
             return res.status(500).json({ Status: false, Error: "Database Query Error" });
         }
-
         console.log("Inserted Row:", result.rows[0]); // Confirm successful insertion
         res.json({
             Status: true,
