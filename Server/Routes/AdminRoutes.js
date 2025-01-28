@@ -72,5 +72,92 @@ router.post('/add_department', (req, res) => {
 });
 
 
+// Route for adding an Employee
+router.post('/add_employee', (req, res) => {
+    console.log('Request Body:', req.body); // Check if data is correct
+    const sql = "INSERT INTO employee (name, department, salary, mail) VALUES ($1, $2, $3, $4) RETURNING *";
+    const values = [
+        req.body.employee.name,
+        req.body.employee.department,
+        req.body.employee.salary,
+        req.body.employee.mail
+    ];
+
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            console.error("Database Query Error:", err);
+            return res.status(500).json({ Status: false, Error: "Database Query Error" });
+        }
+        console.log("Inserted Row:", result.rows[0]); // Confirm successful insertion
+        res.json({
+            Status: true,
+            Message: "Department added successfully!",
+            Data: result.rows[0],
+        });
+    });
+});
+
+//Route for Showing Employee
+router.get('/employee', (req, res) => {
+    const sql = "SELECT * FROM employee"; // Your query to fetch departments
+
+    con.query(sql, (err, result) => {
+        if (err) {
+            console.error("Database Query Error:", err); // Debug database errors
+            return res.status(500).json({ Status: false, Error: "Database Query Error" });
+        } else {
+            // Ensure that the result is in the expected format
+            return res.json({ Status: true, Result: result.rows }); // Use result.rows to return the array of rows
+        }
+    });
+});
+
+//Route to update employee
+
+// router.put('/edit_employee/:eid', (req, res) => {
+//     const id = req.params.id;
+//     const { name, department, salary, mail } = req.body;
+
+//     const sql = `UPDATE employee 
+//        SET name = $1, department = $2, salary = $3, mail = $4 
+//        WHERE eid = $5`;
+//     const values = [
+//         req.body.name,
+//         req.body.department,
+//         req.body.salary,
+//         req.body.mail
+//     ]
+//     con.query(sql,[...values, id], (err, result) => {
+//         if(err) return res.json({Status: false, Error: "Query Error"+err})
+//         return res.json({Status: true, Result: result})
+//     })
+// })
+router.put('/edit_employee/:id', (req, res) => {
+    const eid = req.params.eid;
+    const { name, department, salary, mail } = req.body;
+
+    const sql = `UPDATE employee SET name = $1, department = $2, salary = $3, mail = $4 WHERE eid = $5`;
+    const values = [name, department, salary, mail, eid];
+
+    client.query(sql, values, (err, result) => {
+        if (err) {
+            return res.status(500).json({ Status: false, Error: "Query Error" + err });
+        }
+        return res.json({ Status: true, Result: result.rows });
+    });
+});
+
+
+// //Route to delete employee
+// router.delete('/delete_employee/:id', (req, res) => {
+//     const id = req.params.id;
+//     const sql = "delete from employee where eid = $1"
+//     con.query(sql,[id], (err, result) => {
+//         if(err) return res.json({Status: false, Error: "Query Error"+err})
+//         return res.json({Status: true, Result: result})
+//     })
+// })
+
 
 export { router as adminRouter };

@@ -6,10 +6,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './Components/Dashboard';
 import Employee from './Components/Employee';
 import Department from './Components/Department';
-import Logout from './Components/Logout';
 import Profile from './Components/Profile';
 import { AddDepartment } from './CRUD/AddDepartment';
-
+import AddEmployee from './CRUD/AddEmployee';
+import { EditEmployee } from './CRUD/EditEmployee';
 function App() {
   return (
     <BrowserRouter>
@@ -25,8 +25,9 @@ function App() {
           <Route path="/dashboard/employee" element={<Employee />} />
           <Route path="/dashboard/department" element={<Department />} />
           <Route path="/dashboard/profile" element={<Profile />} />
-          <Route path="/dashboard/logout" element={<Logout />} />
           <Route path="/dashboard/add_department" element={<AddDepartment />} />
+          <Route path="/dashboard/add_employee" element={<AddEmployee />} />
+          <Route path="/dashboard/edit_employee/:id" element={<EditEmployee />} />
         </Route>
       </Routes>
     </BrowserRouter>

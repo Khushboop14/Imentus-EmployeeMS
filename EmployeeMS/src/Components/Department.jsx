@@ -42,6 +42,7 @@ const Department = () => {
                 <tr>
                   <td>{d.did}</td>
                   <td>{d.department}</td>
+                  
                 </tr>
               ))
             ) : (
