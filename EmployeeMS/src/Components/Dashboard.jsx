@@ -1,7 +1,28 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, Outlet } from 'react-router-dom'
 import "bootstrap-icons/font/bootstrap-icons.css";
+import axios from 'axios';
+
 const Dashboard = () => {
+
+  const navigate = useNavigate(); // Initialize `navigate`
+  // const handleLogout = () => {
+	// 	axios.get('http://localhost:3000/auth/logout')
+	// 	.then(res => {
+  //     console.log('Logout Successful');
+	// 		navigate('/')
+	// 	}).catch(err => console.log(err));
+	// };
+  const handleLogout = () => {
+    axios.get('http://localhost:3000/auth/logout')
+    .then(result => {
+      if(result.data.Status) { 
+        localStorage.removeItem("valid")
+        anvigate('/')
+      }
+    })
+  }
+
   return (
     <div className="container-fluid">
 
@@ -46,7 +67,7 @@ const Dashboard = () => {
               </li>
 
               {/* Department */}
-              {/* <li className="w-100">
+              <li className="w-100">
                 <Link
                   to="/dashboard/department"
                   className="nav-link px-0 align-middle text-white"
@@ -54,7 +75,7 @@ const Dashboard = () => {
                   <i className="fs-4 bi-columns ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Department</span>
                 </Link>
-              </li> */}
+              </li>
 
               {/* Profile */}
 							<li>
@@ -63,17 +84,18 @@ const Dashboard = () => {
 							</li>
 
               {/* Logout */}
-							<li >
+							<li onClick={handleLogout}>
 								<a href="#" className="nav-link px-0 align-middle text-white">
 									<i className="fs-4 bi-power"></i> <span className="ms-1 d-none d-sm-inline">Logout</span></a>
 							</li>
             </ul>
           </div>
         </div>
-        <div class="col p-0 m-0">
+        <div className="col p-0 m-0">
           <div className="p-2 d-flex justify-content-center shadow">
             <h3> Employees Managment System</h3>
           </div>
+          <Outlet />
         </div>
       </div>
     </div>

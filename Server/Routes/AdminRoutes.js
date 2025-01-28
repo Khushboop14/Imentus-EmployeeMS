@@ -2,7 +2,10 @@ import express from 'express';
 import con from '../utils/db.js';  
 import jwt from 'jsonwebtoken';
 
+
 const router = express.Router();
+
+// Route for Admin login 
 
 router.post('/adminlogin', (req, res) => {
     console.log('Received data:', req.body); // Log the received data
@@ -30,5 +33,30 @@ router.post('/adminlogin', (req, res) => {
         }
     });
 });
+
+
+// Route for adding a Department
+router.post('/add_department', (req, res) => {
+    const sql = "INSERT INTO department (department) VALUES ($1) RETURNING *";
+    const values = [req.body.department];
+
+    console.log("Request Body:", req.body); // Debug the incoming data
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            console.error("Database Query Error:", err); // Debug database errors
+            return res.status(500).json({ Status: false, Error: "Database Query Error" });
+        }
+
+        console.log("Inserted Row:", result.rows[0]); // Confirm successful insertion
+        res.json({
+            Status: true,
+            Message: "Department added successfully!",
+            Data: result.rows[0],
+        });
+    });
+});
+
+
 
 export { router as adminRouter };

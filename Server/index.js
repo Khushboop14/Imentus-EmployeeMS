@@ -8,9 +8,9 @@ app.use(cors({
     credentials: true
 
 }))
-// app.get('/adminlogin', (req, res) => {
-//     res.send('Welcome to the Server!');
-// });
+app.get('/adminlogin', (req, res) => {
+    res.send('Welcome to the Server!');
+});
 
 app.use(express.json()) //to converet our data into json formate
 app.use('/auth', adminRouter);
@@ -19,6 +19,4 @@ app.listen(3000, () => {
     console.log("Server is running on port 3000");
 });
 
-// app.listen(3000, () => {
-//     console.log("Server is running")
-// })
+
