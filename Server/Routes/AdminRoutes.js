@@ -115,13 +115,13 @@ router.get('/employee', (req, res) => {
 
 //Route to update employee
 
-// router.put('/edit_employee/:eid', (req, res) => {
+// router.put('/edit_employee/:id', (req, res) => {
 //     const id = req.params.id;
 //     const { name, department, salary, mail } = req.body;
 
 //     const sql = `UPDATE employee 
 //        SET name = $1, department = $2, salary = $3, mail = $4 
-//        WHERE eid = $5`;
+//        WHERE id = $5`;
 //     const values = [
 //         req.body.name,
 //         req.body.department,
@@ -134,13 +134,13 @@ router.get('/employee', (req, res) => {
 //     })
 // })
 router.put('/edit_employee/:id', (req, res) => {
-    const eid = req.params.eid;
+    const id = req.params.id;
     const { name, department, salary, mail } = req.body;
 
-    const sql = `UPDATE employee SET name = $1, department = $2, salary = $3, mail = $4 WHERE eid = $5`;
-    const values = [name, department, salary, mail, eid];
+    const sql = "UPDATE employee SET name = $1, department = $2, salary = $3, mail = $4 WHERE id = $5";
+    const values = [name, department, salary, mail];
 
-    client.query(sql, values, (err, result) => {
+    con.query(sql, values, (err, result) => {
         if (err) {
             return res.status(500).json({ Status: false, Error: "Query Error" + err });
         }
@@ -149,15 +149,15 @@ router.put('/edit_employee/:id', (req, res) => {
 });
 
 
-// //Route to delete employee
-// router.delete('/delete_employee/:id', (req, res) => {
-//     const id = req.params.id;
-//     const sql = "delete from employee where eid = $1"
-//     con.query(sql,[id], (err, result) => {
-//         if(err) return res.json({Status: false, Error: "Query Error"+err})
-//         return res.json({Status: true, Result: result})
-//     })
-// })
+//Route to delete employee
+router.delete('/delete_employee/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from employee where id = $1"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
 
 
 export { router as adminRouter };

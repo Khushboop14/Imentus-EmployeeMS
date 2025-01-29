@@ -1,10 +1,11 @@
 import React , {useState, useEffect }from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate} from 'react-router-dom'
 import axios from 'axios'
 
 const Employee = () => {
   
   const [data, setData] = useState([])
+  const navigate = useNavigate()
 
   useEffect(()=> {
     axios.get('http://localhost:3000/auth/employee')
@@ -12,23 +13,22 @@ const Employee = () => {
       if(res.data.Status) {
         setData(res.data.Result);
       } else {
-        alert(result.data.Error);
+        alert(res.data.Error);
       }
     })
     .catch(err => console.log(err));
   }, []); 
 
-  // const handleDelete = (eid) => {
-  //   axios.delete('http://localhost:3000/delete'+id)
-  //   .then(res => {
-  //     if(res.data.Status === "Success") {
-  //       setData(prevData => prevData.filter(emp => emp.id !== id)); 
-  //     } else {
-  //       alert("Error deleting employee");
-  //     }
-  //   })
-  //   .catch(err => console.log(err));
-  // }
+  const handleDelete = (id) => {
+    axios.delete('http://localhost:3000/auth/delete_employee/'+id)
+    .then(result => {
+        if(result.data.Status) {
+            window.location.reload()
+        } else {
+            alert(result.data.Error)
+        }
+    })
+  } 
 
   return (
     <div className='px-5 py-3'>
@@ -52,16 +52,16 @@ const Employee = () => {
             {
              data.length > 0 ? ( 
 
-            data.map(employee => (
-            <tr>
-              <td>{employee.eid}</td>
+            data.map((employee) => (
+            <tr key = {employee.id}>
+              <td>{employee.id}</td>
               <td>{employee.name}</td>
               <td>{employee.department}</td>
               <td>{employee.salary}</td>
               <td>{employee.mail}</td>
               <td>
-                <Link to={'/edit_employee/${employee.eid}'} className='btn btn-primary btn-sm me-2'>edit</Link>
-                <button onClick={e => handleDelete(employee.eid)} className='btn btn-sm btn-danger'>delete</button>
+                <Link to={'/edit_employee/'+employee.id} className='btn btn-primary btn-sm me-2'>edit</Link>
+                <button onClick={e => handleDelete(employee.id)} className='btn btn-sm btn-danger'>delete</button>
               </td>
             </tr>
             ))
@@ -78,5 +78,5 @@ const Employee = () => {
     </div>
   )
 }
-export default Employee
+export default Employee;
 

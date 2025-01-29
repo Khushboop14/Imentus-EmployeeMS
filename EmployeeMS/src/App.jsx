@@ -1,18 +1,17 @@
-
-// export default App
 import Login from './Components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; 
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'; 
+import { Navigate } from 'react-router-dom';
 import Dashboard from './Components/Dashboard';
 import Employee from './Components/Employee';
 import Department from './Components/Department';
 import Profile from './Components/Profile';
-import { AddDepartment } from './CRUD/AddDepartment';
+import  AddDepartment  from './CRUD/AddDepartment';
 import AddEmployee from './CRUD/AddEmployee';
-import { EditEmployee } from './CRUD/EditEmployee';
-function App() {
+import  EditEmployee  from './CRUD/EditEmployee';
+const App = ()=> {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         {/* Redirect root to admin login */}
         <Route path="/" element={<Navigate to="/adminlogin" replace />} />
@@ -30,7 +29,7 @@ function App() {
           <Route path="/dashboard/edit_employee/:id" element={<EditEmployee />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 

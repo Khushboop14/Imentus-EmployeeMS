@@ -44,3 +44,4 @@ export const AddDepartment = () => {
   </div>
   )
 }
+export default AddDepartment
