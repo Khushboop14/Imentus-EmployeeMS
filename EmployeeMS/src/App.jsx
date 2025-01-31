@@ -26,7 +26,8 @@ const App = ()=> {
           <Route path="/dashboard/profile" element={<Profile />} />
           <Route path="/dashboard/add_department" element={<AddDepartment />} />
           <Route path="/dashboard/add_employee" element={<AddEmployee />} />
-          <Route path="/dashboard/edit_employee/:id" element={<EditEmployee />} />
+          <Route path="/dashboard/edit_employee/:id" element={<EditEmployee />} /> 
+
         </Route>
       </Routes>
     </Router>

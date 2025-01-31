@@ -8,7 +8,7 @@ app.use(cors({
     credentials: true
 
 }))
-app.get('/adminlogin', (req, res) => {
+app.post('/auth', (req, res) => {
     res.send('Welcome to the Server!');
 });
 

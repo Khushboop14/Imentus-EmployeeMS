@@ -34,9 +34,8 @@ router.post('/adminlogin', (req, res) => {
     });
 });
 
-
 //Route to show list of department
-router.get('/department', (req, res) => {
+router.get('/department', (_req, res) => {
     const sql = "SELECT * FROM department"; // Your query to fetch departments
 
     con.query(sql, (err, result) => {
@@ -76,14 +75,19 @@ router.post('/add_department', (req, res) => {
 router.post('/add_employee', (req, res) => {
     console.log('Request Body:', req.body); // Check if data is correct
     const sql = "INSERT INTO employee (name, department, salary, mail) VALUES ($1, $2, $3, $4) RETURNING *";
-    const values = [
-        req.body.employee.name,
-        req.body.employee.department,
-        req.body.employee.salary,
-        req.body.employee.mail
+    // const employee = [
+    //     req.body.employee.name,
+    //     req.body.employee.department,
+    //     req.body.employee.salary,
+    //     req.body.employee.mail
+    // ];
+    const employee = [
+        req.body.name,        // Directly access req.body
+        req.body.department,
+        req.body.salary,
+        req.body.mail
     ];
-
-
+   
     con.query(sql, values, (err, result) => {
         if (err) {
             console.error("Database Query Error:", err);
@@ -92,14 +96,15 @@ router.post('/add_employee', (req, res) => {
         console.log("Inserted Row:", result.rows[0]); // Confirm successful insertion
         res.json({
             Status: true,
-            Message: "Department added successfully!",
+            Message: "Employee added successfully!",
             Data: result.rows[0],
         });
     });
 });
 
+
 //Route for Showing Employee
-router.get('/employee', (req, res) => {
+router.get('/auth/employee', (req, res) => {
     const sql = "SELECT * FROM employee"; // Your query to fetch departments
 
     con.query(sql, (err, result) => {
@@ -159,5 +164,10 @@ router.delete('/delete_employee/:id', (req, res) => {
     })
 })
 
+//Route to logout
+router.get('/logout', (req,res) => {
+    res.clearCookie('token')
+    return res.json({Status: true})
+})
 
 export { router as adminRouter };

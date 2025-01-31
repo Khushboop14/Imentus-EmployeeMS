@@ -29,7 +29,7 @@ const AddEmployee = () => {
   });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const formData = new FormData();
     formData.append('name', employee.name);
     formData.append('department', employee.department);
@@ -37,7 +37,7 @@ const AddEmployee = () => {
     formData.append('mail', employee.mail);
 
     axios
-      .post('http://localhost:3000/auth/add_employee', {employee })
+      .post('http://localhost:3000/auth/add_employee', employee)
       .then(result => {
         if (result.data.Status) {
           navigate('/dashboard/employee')
@@ -56,7 +56,7 @@ const AddEmployee = () => {
         <form className="row g-1" onSubmit={handleSubmit}>
           {/* name field */}
           <div className="col-12">
-            <label htmlfor="inputName" className="form-label">
+            <label htmlFor="inputName" className="form-label">
               Name
             </label>
             <input
@@ -72,7 +72,7 @@ const AddEmployee = () => {
 
           {/* Department field */}
           <div className="col-12">
-            <label htmlfor="department" className="form-label">
+            <label htmlFor="department" className="form-label">
               Department
             </label>
             <select
@@ -83,7 +83,7 @@ const AddEmployee = () => {
               }>
 
               {department.map((c) => {
-                return <option value={c.id}>{c.department}
+                return <option  key={c.id} value={c.id}>{c.department}
                 </option>
               })}
             </select>
@@ -91,7 +91,7 @@ const AddEmployee = () => {
 
           {/* salary field */}
           <div className="col-12">
-            <label htmlfor="inputSalary" className="form-label">
+            <label htmlFor="inputSalary" className="form-label">
               Salary
             </label>
             <input
@@ -108,7 +108,7 @@ const AddEmployee = () => {
 
           {/* email field */}
           <div className="col-12">
-            <label htmlfor="inputEmail4" className="form-label">
+            <label htmlFor="inputEmail4" className="form-label">
               mail
             </label>
             <input

@@ -13,12 +13,13 @@ const Dashboard = () => {
 	// 		navigate('/')
 	// 	}).catch(err => console.log(err));
 	// };
+  axios.defaults.withCredentials=true
   const handleLogout = () => {
     axios.get('http://localhost:3000/auth/logout')
     .then(result => {
       if(result.data.Status) { 
         localStorage.removeItem("valid")
-        anvigate('/')
+        navigate('/adminlogin')
       }
     })
   }
@@ -42,7 +43,7 @@ const Dashboard = () => {
               className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
               id="menu"
             >
-              {/* dashboard */}
+              {/* dashboard
               <li className="w-100">
                 <Link
                   to="/dashboard"
@@ -51,7 +52,7 @@ const Dashboard = () => {
                   <i className="fs-4 bi-speedometer2 ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Dashboard</span>
                 </Link>
-              </li>
+              </li> */}
 
               {/* Manage Employees */}
               <li className="w-100">
